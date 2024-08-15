@@ -1,3 +1,5 @@
+'use client'
+
 import { Box, Card, CardBody, Flex, SimpleGrid, Text } from "@chakra-ui/react"
 import NoteCard from "./NoteCard"
 import { Note } from "@/types"
