@@ -5,7 +5,7 @@ import NoteCard from "./NoteCard"
 import { Note } from "@/types"
 import { useState, useEffect } from "react";
 
-export const NoteList = async () => {
+export const NoteList = () => {
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
