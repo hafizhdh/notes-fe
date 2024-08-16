@@ -22,17 +22,17 @@ const NoteDetails = () => {
   const [updateBody, setUpdateBody] = useState(note?.body)
   const id = pathName.split('/')[2]
 
+  const fetchNote = async () => {
+    const noteId = pathName.split('/')[2]
+    const res = await fetch(`${process.env.NEXT_PUBLIC_NOTES_BE_URL}/api/v1/note/${noteId}`)
+    const data = await res.json()
+    setNote(data)
+    setUpdateTitle(data.title)
+    setUpdateBody(data.body)
+  }
   useEffect(() => {
-    const fetchNote = async () => {
-      const noteId = pathName.split('/')[2]
-      const res = await fetch(`${process.env.NEXT_PUBLIC_NOTES_BE_URL}/api/v1/note/${noteId}`)
-      const data = await res.json()
-      setNote(data)
-      setUpdateTitle(data.title)
-      setUpdateBody(data.body)
-    }
     fetchNote()
-  }, [pathName])
+  }, [])
 
   const clearFields = () => {
     setNewTitle('')
@@ -108,7 +108,7 @@ const NoteDetails = () => {
         isClosable: true
       })
       onUpdateClose()
-      router.refresh()
+      fetchNote()
     }
   }
 
