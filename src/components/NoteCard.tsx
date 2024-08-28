@@ -5,14 +5,8 @@ import { Button, Card, CardBody, CardFooter, CardHeader, Divider, FormControl, F
 import { useRouter } from "next/navigation"
 import React from "react"
 
-interface NoteProps {
-  id: string
-  title: string
-  body: string
-  createdAt: Date
-}
 
-const NoteCard =  ({ id, title, body, createdAt }: NoteProps) => {
+const NoteCard =  ({ id, title, body, createdAt }: any) => {
   const router = useRouter()
   const createToast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()

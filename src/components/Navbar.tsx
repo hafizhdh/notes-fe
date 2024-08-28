@@ -2,14 +2,12 @@
 
 import { Button, Flex, FormControl, FormLabel, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spacer, useDisclosure, useToast } from "@chakra-ui/react"
 import Link from "next/link"
-import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { FaFileUpload } from "react-icons/fa";
 import NoteList from './NoteList';
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const router = useRouter()
   const createToast = useToast()
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
@@ -22,20 +20,11 @@ const Navbar = () => {
   }
 
   const fetchNotes = async () => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_NOTES_BE_URL}/api/v1/note`);
-      const data = await response.json();
-
-      if (response.ok) {
-        setNotes(data);
-      } else {
-        console.error("Failed to fetch notes:", data.message);
-      }
-    } catch (error) {
-      console.error("An error occurred while fetching notes:", error);
-    } finally {
-      setLoading(false);
-    }
+    await fetch(`${process.env.NEXT_PUBLIC_NOTES_BE_URL}/api/v1/note`)
+      .then((data) => data.json())
+      .then((notes) => setNotes(notes))
+      .catch((e) => console.error("Failed to fetch notes", e))
+      .finally(() => setLoading(false))
   };
 
   const createNewNote = async () => {
@@ -77,7 +66,7 @@ const Navbar = () => {
 
   useEffect(() => {
     fetchNotes();
-  }, []);
+  }, [notes]);
 
   return (
     <>
